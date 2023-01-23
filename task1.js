@@ -1,24 +1,43 @@
-const countTinyPairs = (a, b, k) => {
-  let output = [];
-  for (let i = 0; i < a.length; i++) {
-    for (let j = b.length - 1; j > 0; j--) {
-      if (!output.includes(output[i])) {
-        output.push(`${a[i]}${b[i]}`);
-      }
-    }
-  }
-  let count = 0;
-  for (let i = 0; i < output.length; i++) {
-    if (output[i] < k) {
-      count = count + 1;
-    }
-  }
+const getUsers = () => {
+    return new Promise((resolve,reject) => {
+        return setTimeout(() => {
+            resolve([{ name: 'jon' }, { name: 'andrey' }, { name: 'tania' }])
+        }, 600)
+    })
+}
 
-  return count;
-};
+const getNameFromUser = (user) => {
+    return new Promise((resolve, reject) => {
+        return setTimeout(()=>{
+            resolve(user.name)
+        },500)
+    })
+}
 
-let a = [1, 2, 3];
-let b = [1, 2, 3];
-let k = 31;
+const capitalizeNames = (name) => {
+    return new Promise((resolve, reject) => {
+        return setTimeout(()=>{
+            resolve(name.toUpperCase())
+        },200)
+    })
+}
 
-console.log(countTinyPairs(a, b, k));
+const runAsyncFunctions = async() => {
+    const users = await getUsers()
+    console.log("user... ", users)
+    Promise.all(
+        users.map(async (user) => {
+            const userId = await getNameFromUser(user)
+
+            console.log(userId)
+
+      const capitalizedId = await capitalizeNames(userId)
+      console.log(capitalizedId)
+        })
+    )
+
+
+}
+
+
+runAsyncFunctions()
